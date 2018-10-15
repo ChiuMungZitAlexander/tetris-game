@@ -6,14 +6,12 @@ interface IControlPanelProps {
 
 const ControlPanel: React.SFC<IControlPanelProps> = (props) => (
   <div className="control-panel">
-    <ul className="leftButton">
-      LEFT
+    <ul className="button-group">
+      <li className="button button-left">L</li>
+      <li className="button button-right">R</li>
+      <li className="button button-trans">T</li>
+      <li className="button button-down">D</li>
     </ul>
-    <ul className="middleButton">
-      <li className="transButton">UP</li>
-      <li className="downButton">DOWN</li>
-    </ul>
-    <ul className="rightButton">RIGHT</ul>
   </div>
 )
 
