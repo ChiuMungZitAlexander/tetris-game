@@ -12,13 +12,13 @@ const Tetris: React.SFC = () => (
   <div className="tetris-container">
     {
       ROW.map(r => (
-        <div key={r} className="row">
+        <ul key={r} className="row">
           {
             COL.map(c => (
-              <div key={c} className="grid">B</div>
+              <li key={c} className="grid" />
             ))
           }
-        </div>
+        </ul>
       ))
     }
   </div>
