@@ -5,6 +5,7 @@
     "module": "esnext",
     "target": "es5",
     "downlevelIteration": true,
+    "experimentalDecorators": true,
     "lib": ["es6", "dom"],
     "sourceMap": true,
     "allowJs": true,
