@@ -1,15 +1,18 @@
 import * as React from 'react'
 
-import ControlPanel from '../../components/controlPanel/controlPanel'
+import Tetris from '../../components/tetris/tetris'
 
-class App extends React.Component {
+export default class App extends React.Component<{}> {
   public render() {
     return (
       <div className="App">
-        <ControlPanel test="test" />
+        <div className="play-area">
+          <section className="info-section">info</section>
+          <section className="tetris-section">
+            <Tetris />
+          </section>
+        </div>
       </div>
     )
   }
 }
-
-export default App
