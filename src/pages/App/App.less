@@ -5,35 +5,35 @@ body {
   padding: 0;
   text-align: center;
   width: 100vw;
-
   #root {
     height: 100%;
-
-    .App {
-      background-color: lightblue;
-      box-sizing: border-box;
-      height: 100%;
-      padding: 10% 0;
-      max-height: 1024px;
-      max-width: 768px;
-      position: relative;
-      width: 100%;
-
-      .play-area {
-        background-color: #bbb;
-        height: calc(100% - 40px);
-
-        .info-section {
-          display: inline-block;
+    @media only screen and (min-device-width: 320px) and (max-device-height: 812px) {
+      .App {
+        background-color: lightblue;
+        box-sizing: border-box;
+        height: 100%;
+        padding: 10px;
+        .play-area {
           height: 100%;
-          width: 20%;
+          .info-section {
+            background-color: red;
+            float: left;
+            height: 100%;
+            width: 20%;
+          }
+          .tetris-section {
+            background-color: yellow;
+            float: right;
+            height: 100%;
+            width: 80%;
+          }
         }
-
-        .tetris-section {
-          display: inline-block;
-          height: 100%;
-          width: 80%;
-        }
+      }
+    }
+    @media only screen and (min-device-width: 640px) {
+      .App {
+        background-color: blue;
+        height: 640px;
       }
     }
   }

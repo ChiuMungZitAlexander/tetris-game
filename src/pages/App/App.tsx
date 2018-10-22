@@ -1,6 +1,5 @@
 import * as React from 'react'
 
-import ControlPanel from '../../components/controlPanel/controlPanel'
 import Tetris from '../../components/tetris/tetris'
 
 class App extends React.Component {
@@ -13,7 +12,6 @@ class App extends React.Component {
             <Tetris />
           </section>
         </div>
-        <ControlPanel test="test" />
       </div>
     )
   }
