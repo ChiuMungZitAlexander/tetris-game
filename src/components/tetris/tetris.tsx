@@ -37,7 +37,7 @@ export default class Tetris extends React.Component<ITetrisProps, {}> {
     )
   }
 
-  private onClick = () => {
+  private onClick = (): void => {
     /* if (window.interval) {
       clearInterval(window.interval)
       return
