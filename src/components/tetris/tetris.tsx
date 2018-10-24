@@ -1,16 +1,13 @@
 import { inject, observer } from 'mobx-react'
 import * as React from 'react'
 
-import AppState from '../../AppState'
-
-const ROW: number[] = [...Array(20).keys()]
-const COL: number[] = [...Array(10).keys()]
+import TetrisBoardStore from '../../store/tetrisStore'
 
 interface ITetrisProps {
-  store?: AppState
+  tetrisBoardStore?: TetrisBoardStore
 }
 
-@inject('store')
+@inject('tetrisBoardStore')
 @observer
 export default class Tetris extends React.Component<ITetrisProps, {}> {
   public componentDidMount = () => {
@@ -18,42 +15,15 @@ export default class Tetris extends React.Component<ITetrisProps, {}> {
   }
 
   public render() {
-    const { store } = this.props
+    const { tetrisBoardStore } = this.props
     return (
-      <div className="tetris-container"
-        // onClick={this.onClick}
-      >
-        {
-          ROW.map(r => (
-            <ul key={r} className="row">
-              {
-                COL.map(c => (
-                  <li key={c} className={store && store.data[r][c]
-                    ? 'grid active'
-                    : 'grid'
-                  } />
-                ))
-              }
-            </ul>
-          ))
-        }
+      <div className="tetris-container">
+        {tetrisBoardStore && tetrisBoardStore.board.length}
       </div>
     )
   }
 
-  /* private onClick = (): void => {
-    const { store } = this.props
-    if (store) {
-      setInterval(() => {
-        store.fall()
-      }, 200)
-    }
-  } */
-
   private onKeyPress = (e: KeyboardEvent): void => {
-    const { store } = this.props
-    if (store) {
-      store.move(e.keyCode)
-    }
+    console.log(e.keyCode)
   }
 }
