@@ -13,11 +13,15 @@ interface ITetrisProps {
 @inject('store')
 @observer
 export default class Tetris extends React.Component<ITetrisProps, {}> {
+  public componentDidMount = () => {
+    window.addEventListener('keydown', this.onKeyPress)
+  }
+
   public render() {
     const { store } = this.props
     return (
       <div className="tetris-container"
-        onClick={this.onClick}
+        // onClick={this.onClick}
       >
         {
           ROW.map(r => (
@@ -37,16 +41,19 @@ export default class Tetris extends React.Component<ITetrisProps, {}> {
     )
   }
 
-  private onClick = (): void => {
-    /* if (window.interval) {
-      clearInterval(window.interval)
-      return
-    } */
+  /* private onClick = (): void => {
     const { store } = this.props
     if (store) {
       setInterval(() => {
         store.fall()
       }, 200)
+    }
+  } */
+
+  private onKeyPress = (e: KeyboardEvent): void => {
+    const { store } = this.props
+    if (store) {
+      store.move(e.keyCode)
     }
   }
 }
