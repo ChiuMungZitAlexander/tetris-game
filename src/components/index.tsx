@@ -1,0 +1,1 @@
+export { default as Tetris } from './tetris/tetris'

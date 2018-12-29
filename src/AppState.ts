@@ -1,68 +1,67 @@
-import { action, observable } from 'mobx'
+import { action, computed, observable } from 'mobx'
 
-import { generateData, generateTetris } from './utils'
+import { generateData, toDisplayData } from 'utils/index'
 
 export default class AppState {
-  @observable public inProgress: boolean = false
-  @observable public data: boolean[][] = generateData()
-  @observable public currentCor: number[] = [0, 4]
-  @observable public currentTetris: boolean[][] = generateTetris()
+  public HEIGHT = 20
+  public WIDTH = 10
 
-  @action public fall = (): void => {
-    const newData = this.data.map(row => row.slice()) // deep clone
+  @observable public data: number[][] = generateData(this.HEIGHT, this.WIDTH) // fixed block data
 
-    if (this.currentCor[0] + 1 > 19) {
-      newData[this.currentCor[0]][this.currentCor[1]] = true
-      if (this.currentCor[0] > 0) {
-        newData[this.currentCor[0] - 1][this.currentCor[1]] = false
-      }
-      this.currentCor = [0, 4]
-    } else if (this.data[this.currentCor[0] + 1][this.currentCor[1]]) {
-      newData[this.currentCor[0]][this.currentCor[1]] = true
-      if (this.currentCor[0] > 0) {
-        newData[this.currentCor[0] - 1][this.currentCor[1]] = false
-      }
-      this.currentCor = [0, 4]
-    } else {
-      newData[this.currentCor[0]][this.currentCor[1]] = true
-      if (this.currentCor[0] > 0) {
-        newData[this.currentCor[0] - 1][this.currentCor[1]] = false
-      }
-      this.currentCor = this.currentCor.map((cor, i) => i ? cor : cor + 1)
+  @observable public position: number[] = [4, 0] // initial block position, position[0] is colIndex
+  @observable public block: number[][] = [[1, 1, 0], [0, 1, 1]] // current block shape
+
+  @action public moveLeft = (): void => {
+    console.info('%c@Action captured: left', 'color: purple; font-style: italic')
+    const newPosition = [this.position[0] - 1, this.position[1]]
+
+    // left boundry collision detect
+    if (newPosition[0] < 0) {
+      return
     }
 
-    this.data = newData
+    // block collision detect
+    for (let row = 0; row < this.block.length; row++) {
+      for (let col = 0; col < this.block[0].length; col++) {
+        if (this.data[newPosition[1] + row][newPosition[0] + col] + this.block[row][col] > 1) {
+          return
+        }
+      }
+    }
+
+    this.position = newPosition
   }
 
-  @action public move = (direction: number): void => {
-    const newData = generateData()
-    switch (direction) {
-      case 37:
-        if (this.currentCor[1] > 0) {
-          newData[this.currentCor[0]][this.currentCor[1]] = false
-          newData[this.currentCor[0]][this.currentCor[1] - 1] = true
-          this.data = newData
-          this.currentCor = this.currentCor.map((cor, i) => i ? cor - 1 : cor)
-        }
-        break
-      case 39:
-        if (this.currentCor[1] < 9) {
-          newData[this.currentCor[0]][this.currentCor[1]] = false
-          newData[this.currentCor[0]][this.currentCor[1] + 1] = true
-          this.data = newData
-          this.currentCor = this.currentCor.map((cor, i) => i ? cor + 1 : cor)
-        }
-        break
-      case 40:
-        setInterval(() => {
-          if (this.currentCor[0] < 19) {
-            newData[this.currentCor[0]][this.currentCor[1]] = true
-            newData[this.currentCor[0] + 1][this.currentCor[1]] = true
-            this.data = newData
-            this.currentCor = this.currentCor.map((cor, i) => i ? cor : cor + 1)
-          }
-        }, 500)
-        break
+  @action public moveRight = (): void => {
+    console.info('%c@Action captured: right', 'color: purple; font-style: italic')
+    const newPosition = [this.position[0] + 1, this.position[1]]
+
+    // right boundry collision detect
+    if (newPosition[0] + this.block[0].length > this.WIDTH) {
+      return
     }
+
+    // block collision detect
+    for (let row = 0; row < this.block.length; row++) {
+      for (let col = 0; col < this.block[0].length; col++) {
+        if (this.data[newPosition[1] + row][newPosition[0] + col] + this.block[row][col] > 1) {
+          return
+        }
+      }
+    }
+
+    this.position = newPosition
+  }
+
+  @action public moveDown = (): void => {
+    console.info('%c@Action captured: down', 'color: purple; font-style: italic')
+    // const newPosition = [this.position[0], this.position[1] + 1]
+
+    // bottom boundry collision
+
+  }
+
+  @computed get toDisplayData(): number[][] {
+    return toDisplayData(this.data, this.position, this.block)
   }
 }

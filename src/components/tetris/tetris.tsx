@@ -3,11 +3,8 @@ import * as React from 'react'
 
 import AppState from '../../AppState'
 
-const ROW: number[] = [...Array(20).keys()]
-const COL: number[] = [...Array(10).keys()]
-
 interface ITetrisProps {
-  store?: AppState
+  store?: AppState,
 }
 
 @inject('store')
@@ -19,41 +16,38 @@ export default class Tetris extends React.Component<ITetrisProps, {}> {
 
   public render() {
     const { store } = this.props
+    const data = store ? store.toDisplayData : [[]]
     return (
-      <div className="tetris-container"
-        // onClick={this.onClick}
-      >
+      <div className="tetris-container">
         {
-          ROW.map(r => (
-            <ul key={r} className="row">
+          data.map((row, rowIndex) => (
+            <div key={rowIndex} className='row'>
               {
-                COL.map(c => (
-                  <li key={c} className={store && store.data[r][c]
-                    ? 'grid active'
-                    : 'grid'
-                  } />
+                row.map((col, colIndex) => (
+                  <span key={colIndex} className='col'>{col}</span>
                 ))
               }
-            </ul>
+            </div>
           ))
         }
       </div>
     )
   }
 
-  /* private onClick = (): void => {
-    const { store } = this.props
-    if (store) {
-      setInterval(() => {
-        store.fall()
-      }, 200)
-    }
-  } */
-
   private onKeyPress = (e: KeyboardEvent): void => {
     const { store } = this.props
     if (store) {
-      store.move(e.keyCode)
+      switch (e.keyCode) {
+        case 37:
+          store.moveLeft()
+          break
+        case 39:
+          store.moveRight()
+          break
+        case 40:
+          store.moveDown()
+          break
+      }
     }
   }
 }

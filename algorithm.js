@@ -1,4 +1,4 @@
-let data = [
+/* let data = [
   [0, 0, 0, 0, 0],
   [0, 1, 0, 0, 0],
   [0, 1, 0, 0, 0],
@@ -171,3 +171,4 @@ document.addEventListener('keydown', e => {
       break
   }
 })
+ */
