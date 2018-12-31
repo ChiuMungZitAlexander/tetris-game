@@ -1,19 +1,19 @@
 /**
- * @param {height} 
- * @param {width} 
+ * @param height
+ * @param width
  */
 export const generateData = (
   height: number, width: number
 ): number[][] => (
   [...Array(height)].map(() => (
-    [0,1,0,0,0,0,0,0,1,0]
+    [...Array(width)].map(() => 0)
   ))
 )
 
 /**
- * @param {data} fixed blocks
- * @param {position} 
- * @param {block} 
+ * @param data fixed block data
+ * @param position current position
+ * @param block current block
  */
 export const toDisplayData = (
   data: number[][],

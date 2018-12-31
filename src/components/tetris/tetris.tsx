@@ -10,8 +10,19 @@ interface ITetrisProps {
 @inject('store')
 @observer
 export default class Tetris extends React.Component<ITetrisProps, {}> {
-  public componentDidMount = () => {
+  public componentDidMount = (): void => {
     window.addEventListener('keydown', this.onKeyPress)
+  }
+
+  public componentDidUpdate = (): void => {
+    const { store } = this.props
+    const gameStatus = store && store.gameStatus
+
+    if (gameStatus === 'over') {
+      window.removeEventListener('keydown', this.onKeyPress)
+      alert('game over')
+      location.reload()
+    }
   }
 
   public render() {
